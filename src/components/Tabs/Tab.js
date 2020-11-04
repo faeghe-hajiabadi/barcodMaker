@@ -7,25 +7,27 @@ export default function Tab(props) {
     onClickProps(label);
   };
 
-  const tabListItem = styled.li`
-    display: inline-block;
+  const TabListItem = styled.li`
+    /* display: inline-block; */
     list-style: none;
     margin-bottom: -1px;
-    padding: 0.5rem 0.75rem;
+    padding: 10px;
   `;
-  const tabListActive = styled.li`
+  const TabListActive = styled.li`
     background-color: white;
-    border: solid #ccc;
+   
     border-width: 1px 1px 0 1px;
   `;
 
   if (activeTab === label) {
     return (
-      <tabListItem onClick={onClick}>
-        <tabListActive>{label}</tabListActive>
-      </tabListItem>
+      <TabListItem onClick={onClick}>
+        <TabListActive>
+          <img width='20px' src={label} ></img>
+        </TabListActive>
+      </TabListItem>
     );
   } else {
-    return <tabListItem onClick={onClick}>{label}</tabListItem>;
+    return <TabListItem onClick={onClick}><img width='20px' src={label}></img></TabListItem>;
   }
 }
