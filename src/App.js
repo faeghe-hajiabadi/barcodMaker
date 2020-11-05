@@ -3,13 +3,22 @@ import Tabs from "./components/Tabs/Tabs";
 import styled from "styled-components";
 import "./App.css";
 import BarCodeGenerator from "./components/BarCodeGenarator/BarCodeGenerator";
+import Url from "./components/Url/Url";
+
 import url from "./img/link.png";
+import urlHover from "./img/link-hover.png";
 import card from "./img/card.png";
+import cardHover from "./img/card-hover.png";
 import text from "./img/text.png";
+import textHover from "./img/text-hover.png";
 import message from "./img/message.png";
+import messageHover from "./img/message-hover.png";
 import wifi from "./img/wi-fi.png";
+import wifiHover from "./img/wi-fi-hover.png";
 import bitcoin from "./img/bitcoin.png";
+import bitcoinHover from "./img/bitcoin-hover.png";
 import img from "./img/image.png";
+import imgDis from "./img/image-hover.png";
 import next from "./img/next.png";
 function App() {
   const [wifiCheckBox, setCheckBox] = useState({
@@ -35,11 +44,10 @@ function App() {
   return (
     <Container>
       <Tabs>
-        <div label={url}>
-          <input type="text" placeholder="Enter your website"></input>
-          <button>Generate QR</button>
+        <div label={url} activeLabel={urlHover}>
+          <Url />
         </div>
-        <div label={card}>
+        <div label={card} activeLabel={cardHover}>
           vCard QR Code
           <form>
             <label>
@@ -50,11 +58,11 @@ function App() {
           </form>
           <button>Generate QR</button>
         </div>
-        <div label={text}>
+        <div label={text} activeLabel={textHover}>
           <input type="text" placeholder="Enter your Text"></input>
           <button>Generate QR</button>
         </div>
-        <div label={message}>
+        <div label={message} activeLabel={messageHover}>
           Email QR Code
           <form>
             <label>
@@ -72,7 +80,7 @@ function App() {
           </form>
           <button>Generate QR</button>
         </div>
-        <div label={wifi}>
+        <div label={wifi} activeLabel={wifiHover}>
           <form>
             <label>Network Name:</label>
             <input placeholder="SSID"></input>
@@ -91,7 +99,7 @@ function App() {
           </form>
           <button>Generate QR</button>
         </div>
-        <div label={bitcoin}>
+        <div label={bitcoin} activeLabel={bitcoinHover}>
           <form>
             <label>Cryptocurrency</label>
             {Object.keys(wifiCheckBox).map((key) => (
@@ -111,7 +119,9 @@ function App() {
             <input></input>
           </form>
         </div>
-        <div label={img}>OOPS you need to sign up</div>
+        <div label={img} activeLabel={imgDis}>
+          OOPS you need to sign up
+        </div>
       </Tabs>
 
       <BarCodeGenerator />
