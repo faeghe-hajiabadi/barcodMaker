@@ -14,8 +14,7 @@ export default function Tabs(props) {
   const TabsStyled = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    grid-template-rows: repeat(1, 600px);
-    grid-gap: 1rem;
+    grid-template-rows: repeat(1, 640px);
     grid-auto-flow: dense;
   `;
   const TabListBox = styled.div`

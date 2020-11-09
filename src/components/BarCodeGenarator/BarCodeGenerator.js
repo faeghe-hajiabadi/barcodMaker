@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import QRCode from 'qrcode.react';
 
 
-function BarCodeGenerator() {
+function BarCodeGenerator(props) {
+  // const value = props;
   const initialState = {
     NetworkName: "",
     Password: "",
