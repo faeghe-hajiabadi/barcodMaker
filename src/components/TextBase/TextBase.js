@@ -16,7 +16,7 @@ export default function TextBase(props) {
         <DefaultInput type="text" placeholder={placeholder}></DefaultInput>
       </UrlContainer>
       <UrlSubmitBtn>
-        <img width="20" src={generate}></img>Generate QR Code
+        <img width="20" src={generate} alt='generate qr logo'></img>Generate QR Code
       </UrlSubmitBtn>
     </>
   );

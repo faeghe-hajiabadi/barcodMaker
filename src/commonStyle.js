@@ -4,7 +4,10 @@ export const Label = styled.label`
   font-size: 14px;
   color: #a4b6d4;
 `;
-
+export const BigLabel = styled.label`
+  font-size: 16px;
+  color: #a4b6d4;
+`;
 export const UrlContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,4 +60,17 @@ export const UrlSubmitBtn = styled.button`
   color: #ffffff;
   font-size: 16px;
   font-weight: 600;
+`;
+
+export const CheckBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  color: #a4b6d4;
+  font-size: 16px;
+`;
+export const Text = styled.div`
+  text-size: 14px;
+  color: #999d9f;
 `;

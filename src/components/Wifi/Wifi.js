@@ -4,23 +4,30 @@ import {
   Title,
   DefaultInput,
   UrlSubmitBtn,
-  Label,
+  BigLabel,
+  CheckBox,
 } from "../../commonStyle";
 
 export default function Wifi() {
-  const [wifiCheckBox, setCheckBox] = useState({
-    id: 1,
-    value: "None",
-    isChecked: false,
-    id: 2,
-    value: "WPA/WPA2",
-    isChecked: false,
-    id: 2,
-    value: "WEP",
-    isChecked: false,
-  });
-  const handleToggle = ({ target }) =>
-    setCheckBox((s) => ({ ...s, [target.name]: !s[target.name] }));
+  const [wifiCheckBox, setCheckBox] = useState([
+    { value: "None", isChecked: false },
+    { value: "WPA/WPA2", isChecked: false },
+    { value: "WEP", isChecked: false },
+  ]);
+
+  const onToggleTodo = (index) => {
+    setCheckBox((currentCheckBox) =>
+      currentCheckBox.map((item, todoIndex) => {
+        if (todoIndex === index) {
+          return {
+            ...item,
+            isChecked: !item.isChecked,
+          };
+        }
+        return item;
+      })
+    );
+  };
 
   return (
     <>
@@ -35,21 +42,24 @@ export default function Wifi() {
           />
 
           <DefaultInput type="password" placeholder="Password" />
-
-          <Label>Encryption</Label>
-
-          <ul>
-            {Object.keys(wifiCheckBox).map((key, item) => (
-              <input
-                type="checkbox"
-                onChange={handleToggle}
-                value={item}
-                key={key}
-                name={key}
-                checked={wifiCheckBox[key]}
-              />
-            ))}
-          </ul>
+          <CheckBox>
+            <BigLabel>Encryption</BigLabel>
+            <ul>
+              {wifiCheckBox.map((item, key) => (
+                <>
+                  <input
+                    type="checkbox"
+                    onChange={() => onToggleTodo(key)}
+                    value={item}
+                    key={key}
+                    name={key}
+                    checked={wifiCheckBox[key].isChecked}
+                  />
+                  <label>{item.value}</label>
+                </>
+              ))}
+            </ul>
+          </CheckBox>
         </form>
       </UrlContainer>
 
