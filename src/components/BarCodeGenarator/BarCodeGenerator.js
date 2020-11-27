@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 
 import styled, { css } from "styled-components";
 import "./barcodeGenerator.scss";
 import QRCode from "easyqrcodejs";
 import downArrow from "../../img/arrowDown.png";
+import { store } from '../../store';
+
+
+
+
 
 const App = styled.div`
   display: flex;
@@ -72,20 +77,18 @@ function BarCodeGenerator(props) {
     isMember: false,
   };
 
+  const [fileBase64, setFileBase64] = useState("");
+
   const [value, setValue] = useState(initialState);
   const [formValue, setFormValue] = useState("test");
   const [isOpen, setOpen] = useState([false, false, false]);
-  const [color, setColor] = useState({
-    darkColor: "#000000",
-    lightColor: "#FFFFFF",
-    topLeft: "#b7d28d",
-    topRight: "#c17e61",
-    bottomLeft: "#aa5b71",
-  });
+  const globalState = useContext(store);
+  const { dispatch } = globalState;
 
   const [qrOptions, setQrOptions] = useState({
     text: "faeghe haji",
     title: "",
+    titleColor: "black",
     width: 180,
     height: 180,
     colorDark: "#000000",
@@ -93,7 +96,9 @@ function BarCodeGenerator(props) {
     PO_TL: "#b7d28d",
     PO_TR: "#c17e61",
     PO_BL: "#aa5b71",
-    logo:''
+    logo: "",
+    logoWidth: 80,
+    logoHeight: 80,
   });
 
   const [uploadedImage, setUploadedImage] = useState({
@@ -107,17 +112,26 @@ function BarCodeGenerator(props) {
   }, {});
 
   useEffect(() => {
-    console.log("qrcode", qrcode);
+    
     generate();
   }, [qrOptions, qrcodeDOM]);
+
+  
+
+  useEffect(() => {
+    setQrOptions((prevState) => ({
+      ...prevState,
+      logo: fileBase64,
+    }));
+  }, [fileBase64]);
 
   const generate = () => {
     if (!qrcodeDOM) {
       return;
     }
-    console.log("qrcode", qrcode);
+
     if (qrcode) {
-      console.log("not empty", qrcode);
+   
       qrcode.clear();
     }
 
@@ -125,9 +139,8 @@ function BarCodeGenerator(props) {
   };
   const mySubmitHandler = (event) => {
     event.preventDefault();
-    console.log("this is form", event.target);
     setFormValue(value);
-    console.log("value", value);
+
     // setValue(event.target.value);
   };
   // const myChangeHandler = (event) => {
@@ -165,7 +178,7 @@ function BarCodeGenerator(props) {
   const imageSettingsCode = { height: 20, width: 60, excavate: true };
 
   const toggleAccordion = (index) => {
-    console.log("this isINDEX in parent; ", index);
+    
     const newArr = [...isOpen];
     newArr[index] = !newArr[index];
     for (let i = 0; i < newArr.length; i++) {
@@ -173,21 +186,31 @@ function BarCodeGenerator(props) {
         newArr[i] = false;
       }
     }
-    console.log("this is new state", newArr);
+
     setOpen(newArr);
   };
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
     if (file) {
       setUploadedImage(file);
-      setQrOptions((prevState) => ({
-        ...prevState,
-        logo: uploadedImage,
-      }));
+      convertFileToBase64(file);
+    }
+  };
+  const convertFileToBase64 = (file) => {
+    let reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        let base64 = reader.result;
+        
+        setFileBase64(base64);
+      };
+      reader.onerror = (error) => {
+        console.log("error ", error);
+      };
     }
   };
 
-  console.log("this is state", qrOptions);
   return (
     <App>
       <BarcodeContainer>
@@ -200,7 +223,30 @@ function BarCodeGenerator(props) {
               toggleAccordion={() => toggleAccordion(0)}
               isOpen={isOpen[0]}
             >
-              <BarcodeTitleInput placeholder="Enter your barcode title here"></BarcodeTitleInput>
+              <BarcodeTitleInput
+                placeholder="Enter your barcode title here"
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setQrOptions((prevState) => ({
+                    ...prevState,
+                    title: value,
+                  }));
+                }}
+              ></BarcodeTitleInput>
+              <div className="accordion-content-child">
+                <span>font color</span>
+                <BarcodeColorInput
+                  type="color"
+                  value={qrOptions.titleColor}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    setQrOptions((prevState) => ({
+                      ...prevState,
+                      titleColor: value,
+                    }));
+                  }}
+                ></BarcodeColorInput>
+              </div>
             </Accordion>
             <Accordion
               title="Shape"
@@ -317,7 +363,7 @@ function BarCodeGenerator(props) {
 const Accordion = ({ title, index, children, isOpen, toggleAccordion }) => {
   // const [isOpen, setOpen] = React.useState(isOpen);
   function toggleAccordionChild() {
-    console.log("clicked in child component");
+    
     toggleAccordion();
   }
   return (

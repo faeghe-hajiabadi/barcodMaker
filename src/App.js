@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useReducer } from "react";
 import Tabs from "./components/Tabs/Tabs";
 import styled from "styled-components";
 import "./App.css";
@@ -25,6 +25,9 @@ import bitcoinHover from "./img/bitcoin-hover.png";
 import img from "./img/image.png";
 import imgDis from "./img/image-hover.png";
 
+import { store } from './store.js';
+
+
 const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -35,12 +38,17 @@ const Container = styled.div`
   padding: 10px;
 `;
 
+
+
+
+
 function App() {
   const [urlValue, setUrlValue] = useState();
   const setUrlValueOnclick = () => {
     setUrlValue();
   };
   const items = ["One", "Two", "Three"];
+
 
   return (
     <Container>
