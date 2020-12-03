@@ -1,8 +1,16 @@
 import React, {createContext, useReducer} from 'react';
 
 const initialState = {
-    emailAddress:'',
-    vCard : {},
+    emailAddress:'test',
+    vCard : {
+      name: "",
+      contact: "",
+      email: "",
+      company: "",
+      jobTitle: "",
+      city: "",
+      websiteAddress: "",
+    },
     text:'',
     emailContent:{},
     wifiInfo : {},
@@ -26,6 +34,11 @@ const StateProvider = ( { children } ) => {
             ...state,
             text: action.payload
         }
+      case 'ADD_VCARD':
+        return{
+          ...state,
+          vCard: action.payload
+        }  
       default:
         throw new Error();
     };

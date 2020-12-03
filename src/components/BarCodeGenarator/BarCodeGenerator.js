@@ -84,6 +84,9 @@ function BarCodeGenerator(props) {
   const [isOpen, setOpen] = useState([false, false, false]);
   const globalState = useContext(store);
   const { dispatch } = globalState;
+  const emailAddress = globalState.state.emailAddress;
+  const vCard = globalState.state.vCard;
+  console.log(vCard)
 
   const [qrOptions, setQrOptions] = useState({
     text: "faeghe haji",
@@ -122,8 +125,24 @@ function BarCodeGenerator(props) {
     setQrOptions((prevState) => ({
       ...prevState,
       logo: fileBase64,
+      
     }));
   }, [fileBase64]);
+
+
+  useEffect(() => {
+    console.log("detected!!!!!!",vCard)
+    let vCardConverted = JSON.parse(JSON.stringify(vCard));
+    console.log("vCardConverted",vCardConverted)
+    setQrOptions((prevState) => ({
+      ...prevState,
+      text: vCardConverted
+  
+    }));
+  }, [vCard]);
+
+
+
 
   const generate = () => {
     if (!qrcodeDOM) {
@@ -143,10 +162,7 @@ function BarCodeGenerator(props) {
 
     // setValue(event.target.value);
   };
-  // const myChangeHandler = (event) => {
-  //   setValue({ ...value, [event.target.name]: event.target.value });
-  //   console.log("value", { value });
-  // };
+
   const downloadQR = () => {
     const canvas = document.getElementById("123456");
     const pngUrl = canvas
@@ -210,7 +226,7 @@ function BarCodeGenerator(props) {
       };
     }
   };
-
+console.log("this is global state",globalState)
   return (
     <App>
       <BarcodeContainer>
