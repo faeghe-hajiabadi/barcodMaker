@@ -1,50 +1,26 @@
-import React, {createContext, useReducer} from 'react';
+import React, { createContext, useReducer } from "react";
 
 const initialState = {
-    emailAddress:'test',
-    vCard : {
-      name: "",
-      contact: "",
-      email: "",
-      company: "",
-      jobTitle: "",
-      city: "",
-      websiteAddress: "",
-    },
-    text:'',
-    emailContent:{},
-    wifiInfo : {},
-    bitCoinInfo:{}
-    
+  text: "add data to get your QR",
 };
 const store = createContext(initialState);
 const { Provider } = store;
 
-const StateProvider = ( { children } ) => {
+const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
-    switch(action.type) {
-      case 'ADD_EMAIL':
-        
+    switch (action.type) {
+      case "ADD_TEXT":
         return {
-            ...state,
-            emailAddress: action.payload
-        }
-      case 'ADD_TEXT':
-        return {
-            ...state,
-            text: action.payload
-        }
-      case 'ADD_VCARD':
-        return{
           ...state,
-          vCard: action.payload
-        }  
+          text: action.payload,
+        };
+
       default:
         throw new Error();
-    };
+    }
   }, initialState);
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };
 
-export { store, StateProvider }
+export { store, StateProvider };

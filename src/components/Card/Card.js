@@ -1,4 +1,5 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
+import convertObjectToText from "../../convertToText";
 import {
   UrlContainer,
   Title,
@@ -23,13 +24,14 @@ export default function Card() {
   };
   const [formState, setFormState] = useState(initialFormData);
   const handleInputChange = (e) => {
-    console.log("e", e.target);
+    
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
-  console.log("this is state", formState);
+  
   const handleFormSubmit = () => {
-    console.log("e after submit",formState)
-    dispatch({type:'ADD_VCARD',payload:formState})
+  
+
+    dispatch({ type: "ADD_TEXT", payload: convertObjectToText(formState) });
   };
   return (
     <>

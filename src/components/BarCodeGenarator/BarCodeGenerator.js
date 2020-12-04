@@ -1,14 +1,10 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import styled, { css } from "styled-components";
 import "./barcodeGenerator.scss";
 import QRCode from "easyqrcodejs";
 import downArrow from "../../img/arrowDown.png";
-import { store } from '../../store';
-
-
-
-
+import { store } from "../../store";
 
 const App = styled.div`
   display: flex;
@@ -27,18 +23,18 @@ const BarcodeContainer = styled.div`
 const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  width: 80%;
   align-items: center;
   justify-content: space-evenly;
   margin-top: 10%;
 `;
 const DefaultBtn = css`
-  height: 70px;
+  height: 60px;
   width: 130px;
   color: white;
   border-radius: 36px;
   border: none;
   font-size: 16px;
+  margin: 5px;
 `;
 const SvgSave = styled.button`
   ${DefaultBtn};
@@ -84,16 +80,13 @@ function BarCodeGenerator(props) {
   const [isOpen, setOpen] = useState([false, false, false]);
   const globalState = useContext(store);
   const { dispatch } = globalState;
-  const emailAddress = globalState.state.emailAddress;
-  const vCard = globalState.state.vCard;
-  console.log(vCard)
 
   const [qrOptions, setQrOptions] = useState({
     text: "faeghe haji",
     title: "",
     titleColor: "black",
-    width: 180,
-    height: 180,
+    width: 220,
+    height: 220,
     colorDark: "#000000",
     colorLight: "#FFFFFF",
     PO_TL: "#b7d28d",
@@ -115,34 +108,22 @@ function BarCodeGenerator(props) {
   }, {});
 
   useEffect(() => {
-    
-    generate();
-  }, [qrOptions, qrcodeDOM]);
-
-  
-
-  useEffect(() => {
     setQrOptions((prevState) => ({
       ...prevState,
       logo: fileBase64,
-      
     }));
   }, [fileBase64]);
 
-
   useEffect(() => {
-    console.log("detected!!!!!!",vCard)
-    let vCardConverted = JSON.parse(JSON.stringify(vCard));
-    console.log("vCardConverted",vCardConverted)
     setQrOptions((prevState) => ({
       ...prevState,
-      text: vCardConverted
-  
+      text: globalState.state.text,
     }));
-  }, [vCard]);
+  }, [globalState.state.text]);
 
-
-
+  useEffect(() => {
+    generate();
+  }, [qrOptions, qrcodeDOM]);
 
   const generate = () => {
     if (!qrcodeDOM) {
@@ -150,7 +131,6 @@ function BarCodeGenerator(props) {
     }
 
     if (qrcode) {
-   
       qrcode.clear();
     }
 
@@ -194,7 +174,6 @@ function BarCodeGenerator(props) {
   const imageSettingsCode = { height: 20, width: 60, excavate: true };
 
   const toggleAccordion = (index) => {
-    
     const newArr = [...isOpen];
     newArr[index] = !newArr[index];
     for (let i = 0; i < newArr.length; i++) {
@@ -218,7 +197,7 @@ function BarCodeGenerator(props) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         let base64 = reader.result;
-        
+
         setFileBase64(base64);
       };
       reader.onerror = (error) => {
@@ -226,7 +205,8 @@ function BarCodeGenerator(props) {
       };
     }
   };
-console.log("this is global state",globalState)
+  console.log("qrOptions", qrOptions);
+
   return (
     <App>
       <BarcodeContainer>
@@ -379,7 +359,6 @@ console.log("this is global state",globalState)
 const Accordion = ({ title, index, children, isOpen, toggleAccordion }) => {
   // const [isOpen, setOpen] = React.useState(isOpen);
   function toggleAccordionChild() {
-    
     toggleAccordion();
   }
   return (

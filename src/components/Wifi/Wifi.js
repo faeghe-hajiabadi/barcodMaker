@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { store } from "../../store";
+import convertObjectToText from "../../convertToText";
 import {
   UrlContainer,
   Title,
@@ -9,6 +11,16 @@ import {
 } from "../../commonStyle";
 
 export default function Wifi() {
+  let wifiChoosed = "";
+  const initialBitcoinState = {
+    netWorkName: "test",
+    password: "test",
+    encription: "test",
+  };
+  const [wifiState, setWifiState] = useState(initialBitcoinState);
+  const globalState = useContext(store);
+  const { dispatch } = globalState;
+
   const [wifiCheckBox, setCheckBox] = useState([
     { value: "None", isChecked: false },
     { value: "WPA/WPA2", isChecked: false },
@@ -28,7 +40,20 @@ export default function Wifi() {
       })
     );
   };
-
+  useEffect(() => {
+    wifiCheckBox.map((item) => {
+      if (item.isChecked) {
+        wifiChoosed = item.value;
+      }
+    });
+    setWifiState({ ...wifiState, encription: wifiChoosed });
+  }, [wifiCheckBox]);
+  const handleFormSubmit = () => {
+    dispatch({ type: "ADD_TEXT", payload: convertObjectToText(wifiState) });
+  };
+  const handleInputChange = (e) => {
+    setWifiState({ ...wifiState, [e.target.name]: e.target.value });
+  };
   return (
     <>
       <UrlContainer>
@@ -36,12 +61,17 @@ export default function Wifi() {
         <form>
           <DefaultInput
             type="text"
-            name="name"
-            placeholder="Network Name
-"
+            name="netWorkName"
+            placeholder="Network Name"
+            onChange={handleInputChange}
           />
 
-          <DefaultInput type="password" placeholder="Password" />
+          <DefaultInput
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleInputChange}
+          />
           <CheckBox>
             <BigLabel>Encryption</BigLabel>
             <ul>
@@ -63,7 +93,7 @@ export default function Wifi() {
         </form>
       </UrlContainer>
 
-      <UrlSubmitBtn>Generate QR</UrlSubmitBtn>
+      <UrlSubmitBtn onClick={handleFormSubmit}>Generate QR</UrlSubmitBtn>
     </>
   );
 }

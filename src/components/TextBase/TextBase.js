@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import convertObjectToText from "../../convertToText";
 import generate from "../../img/generate.png";
 import {
   UrlContainer,
@@ -6,30 +7,21 @@ import {
   DefaultInput,
   UrlSubmitBtn,
 } from "../../commonStyle";
-import { store} from "../../store";
+import { store } from "../../store";
 
 export default function TextBase(props) {
-  
   const [textInput, setTextInput] = useState();
 
   const globalState = useContext(store);
   const { dispatch } = globalState;
 
-  console.log("this is global store",globalState)
+  
 
   const { name, placeholder } = props;
 
-
-
-  const handleSubmitClick = () =>{
-    if(name ==='Email'){
-      dispatch({ type: "ADD_EMAIL", payload:textInput });
-    }else{
-      dispatch({ type: "ADD_TEXT", payload:textInput });
-    }
-     
-    
-  }
+  const handleSubmitClick = () => {
+    dispatch({ type: "ADD_TEXT", payload: convertObjectToText(textInput) });
+  };
   return (
     <>
       <UrlContainer className="test-btn">
@@ -42,9 +34,7 @@ export default function TextBase(props) {
           }}
         ></DefaultInput>
       </UrlContainer>
-      <UrlSubmitBtn
-        onClick={handleSubmitClick}
-      >
+      <UrlSubmitBtn onClick={handleSubmitClick}>
         <img width="20" src={generate} alt="generate qr logo"></img>Generate QR
         Code
       </UrlSubmitBtn>
