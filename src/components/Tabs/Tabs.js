@@ -11,7 +11,7 @@ const TabList = styled.ol`
 const TabsStyled = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  grid-template-rows: repeat(1, 640px);
+  grid-template-rows: repeat(1, 700px);
   grid-auto-flow: dense;
 `;
 const TabListBox = styled.div`
@@ -19,7 +19,7 @@ const TabListBox = styled.div`
   border-radius: 100;
   display: flex;
   flex-direction: column;
-  width: 120px;
+  width: 90px;
   justify-content: space-evenly;
   align-items: center;
   border-radius: 100px;

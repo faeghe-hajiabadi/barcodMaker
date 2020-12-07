@@ -43,8 +43,8 @@ export default function Wifi() {
   useEffect(() => {
     wifiCheckBox.map((item) => {
       if (item.isChecked) {
-        wifiChoosed = item.value;
-      }
+      return wifiChoosed = item.value
+    }
     });
     setWifiState({ ...wifiState, encription: wifiChoosed });
   }, [wifiCheckBox]);

@@ -13,8 +13,8 @@ const App = styled.div`
 const BarcodeContainer = styled.div`
   background: #03268a;
   border-radius: 22px;
-  height: 100%;
-  width: 50%;
+  height: 80vh ;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,9 +84,9 @@ function BarCodeGenerator(props) {
   const [qrOptions, setQrOptions] = useState({
     text: "faeghe haji",
     title: "",
-    titleColor: "black",
-    width: 220,
-    height: 220,
+    titleColor: "#000000",
+    width: 193,
+    height: 193,
     colorDark: "#000000",
     colorLight: "#FFFFFF",
     PO_TL: "#b7d28d",
@@ -105,7 +105,7 @@ function BarCodeGenerator(props) {
 
   useEffect(() => {
     setQrcodeDOM(React.createRef());
-  }, {});
+  }, []);
 
   useEffect(() => {
     setQrOptions((prevState) => ({
@@ -205,7 +205,7 @@ function BarCodeGenerator(props) {
       };
     }
   };
-  console.log("qrOptions", qrOptions);
+  
 
   return (
     <App>
@@ -340,7 +340,7 @@ function BarCodeGenerator(props) {
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
-                multiple="false"
+                multiple={false}
               />
             </Accordion>
           </div>

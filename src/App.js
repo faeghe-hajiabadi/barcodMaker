@@ -1,4 +1,4 @@
-import React, { useState, useContext, useReducer } from "react";
+import React, { useState } from "react";
 import Tabs from "./components/Tabs/Tabs";
 import styled from "styled-components";
 import "./App.css";
@@ -25,21 +25,31 @@ import bitcoinHover from "./img/bitcoin-hover.png";
 import img from "./img/image.png";
 import imgDis from "./img/image-hover.png";
 
-import { store } from './store.js';
 
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  grid-template-rows: repeat(2, 700px);
-  grid-gap: 1rem;
-  grid-auto-flow: dense;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #ecf7ff;
-  padding: 10px;
+
+  width: 100vw;
+  height: 100vh;
 `;
 
-
-
+const RediusContainer = styled.div`
+  background-color: #d9eaf7;
+  width: 1220px;
+  border-radius: 45px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  width: 80vw;
+  height: 90vh;
+  padding-top: 2%;
+  grid-gap: 1rem;
+  grid-auto-flow: dense;
+`;
 
 
 function App() {
@@ -47,44 +57,45 @@ function App() {
   const setUrlValueOnclick = () => {
     setUrlValue();
   };
-  const items = ["One", "Two", "Three"];
-
+  
 
   return (
     <Container>
-      <Tabs>
-        <div label={url} activeLabel={urlHover}>
-          <TextBase
-            name="Email"
-            placeholder="Enter Your Email"
-            setUrlValue={setUrlValue}
-          />
-        </div>
-        <div label={card} activeLabel={cardHover}>
-          <Card />
-        </div>
-        <div label={text} activeLabel={textHover}>
-          <TextBase
-            name="Text"
-            placeholder="Enter Your Text"
-            setUrlValue={setUrlValue}
-          />
-        </div>
-        <div label={message} activeLabel={messageHover}>
-          <Message />
-        </div>
-        <div label={wifi} activeLabel={wifiHover}>
-          <Wifi />
-        </div>
-        <div label={bitcoin} activeLabel={bitcoinHover}>
-          <BitCoin />
-        </div>
-        <div label={img} activeLabel={imgDis}>
-          <ImageComponent />
-        </div>
-      </Tabs>
+      <RediusContainer>
+        <Tabs>
+          <div label={url} activeLabel={urlHover}>
+            <TextBase
+              name="Email"
+              placeholder="Enter Your Email"
+              setUrlValue={setUrlValue}
+            />
+          </div>
+          <div label={card} activeLabel={cardHover}>
+            <Card />
+          </div>
+          <div label={text} activeLabel={textHover}>
+            <TextBase
+              name="Text"
+              placeholder="Enter Your Text"
+              setUrlValue={setUrlValue}
+            />
+          </div>
+          <div label={message} activeLabel={messageHover}>
+            <Message />
+          </div>
+          <div label={wifi} activeLabel={wifiHover}>
+            <Wifi />
+          </div>
+          <div label={bitcoin} activeLabel={bitcoinHover}>
+            <BitCoin />
+          </div>
+          <div label={img} activeLabel={imgDis}>
+            <ImageComponent />
+          </div>
+        </Tabs>
 
-      <BarCodeGenerator />
+        <BarCodeGenerator />
+      </RediusContainer>
     </Container>
   );
 }

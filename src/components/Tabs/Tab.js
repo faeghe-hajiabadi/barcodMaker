@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const ActiveTabItem = styled.div`
-  background: #03268a;
-  color: #ffffff;
-`;
+
 const TabListItem = styled.div`
   /* display: inline-block; */
   list-style: none;
@@ -25,8 +22,8 @@ const TabListNormal = styled.div`
 const TabListActive = styled.li`
   background: #03268a;
   border-radius: 100px;
-  width: 64px;
-  height: 64px;
+  width: 57px;
+  height: 57px;
   color: #ffffff;
   border-width: 1px 1px 0 1px;
   display: flex;
@@ -52,7 +49,7 @@ export default function Tab(props) {
     return (
       <TabListItem onClick={onClick}>
         <TabListNormal>
-          <img width="20px" src={label}></img>
+          <img width="20px" src={label} alt='tab label'></img>
         </TabListNormal>
       </TabListItem>
     );
